@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GSW Klasse 5 – Lösungen &amp; Lernpass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F7FB; --grid:rgba(56,92,170,.10); --card:#FFFFFF; --ink:#1B2A4A; --muted:#5A6684;
+  --line:#CBD5E6; --track:#DCE4F1; --sol:#C62828; --ok:#15803D;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10162A; --grid:rgba(140,170,255,.07); --card:#1A2240; --ink:#E9EDF9; --muted:#9AA6C6;
+    --line:#33406B; --track:#2A3560; --sol:#FF8A80; --ok:#6EE7A0;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10162A; --grid:rgba(140,170,255,.07); --card:#1A2240; --ink:#E9EDF9; --muted:#9AA6C6;
+  --line:#33406B; --track:#2A3560; --sol:#FF8A80; --ok:#6EE7A0;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;font-size:clamp(16px,1.35vw,26px);scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{
+  height:100%;margin:0;font-family:"Lexend",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);
+  background-color:var(--bg);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;overflow:hidden;line-height:1.45;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--mc,#2563EB);outline-offset:2px}
+#app{height:100%}
+.hand{font-family:"Caveat","Segoe Print","Bradley Hand",cursive}
+
+/* ---------- Buttons ---------- */
+.btn{min-height:3.2rem;padding:0 1.2rem;border-radius:.9rem;border:2px solid var(--line);background:var(--card);font-weight:600;display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+.btn.primary{background:var(--mc);border-color:var(--mc);color:#fff}
+.btn.ghost{background:transparent}
+
+/* ---------- Home ---------- */
+.home{height:100%;overflow-y:auto;padding:1.6rem 2rem 2rem;display:flex;flex-direction:column;gap:1.4rem}
+.home-top{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap}
+.home-top h1{margin:0;font-size:2.1rem;line-height:1.1;font-weight:700}
+.home-top p{margin:.3rem 0 0;color:var(--muted);max-width:52ch}
+.home-top .grow{flex:1;min-width:16rem}
+.badge-gsw{width:5.6rem;height:5.6rem;border-radius:50%;border:4px double var(--ink);display:grid;place-items:center;text-align:center;font-weight:700;line-height:1.05;transform:rotate(-9deg);flex:none}
+.badge-gsw span{font-size:1.5rem;display:block}
+.badge-gsw small{font-size:.7rem;font-weight:500}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;flex:1;min-height:0}
+.mcard{--mcs:color-mix(in srgb,var(--mc) 11%,var(--card));text-align:left;border:2px solid color-mix(in srgb,var(--mc) 45%,var(--line));background:var(--mcs);border-radius:1.4rem;padding:1.4rem 1.5rem;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto 1fr auto;gap:.5rem 1rem;min-height:11rem;position:relative;overflow:hidden}
+.mcard:active{transform:scale(.985)}
+.mcard .emo{font-size:2.6rem;line-height:1}
+.mcard .nr{font-size:.95rem;font-weight:600;color:var(--mct)}
+.mcard h2{margin:.1rem 0 .2rem;font-size:1.5rem;line-height:1.2}
+.mcard p{margin:0;color:var(--muted);font-size:.95rem}
+.mcard .dots{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.dot{width:.85rem;height:.85rem;border-radius:50%;border:2px solid color-mix(in srgb,var(--mc) 55%,var(--line));background:transparent}
+.dot.on{background:var(--mc);border-color:var(--mc)}
+.mcard .go{font-weight:600;color:var(--mct);margin-left:auto;font-size:.95rem}
+.ring{--p:0;width:5.2rem;height:5.2rem;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--mc) calc(var(--p)*1%),var(--track) 0);align-self:start}
+.ring b{width:4rem;height:4rem;border-radius:50%;background:var(--mcs);display:grid;place-items:center;font-size:1rem}
+.home-foot{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;justify-content:space-between;color:var(--muted);font-size:.9rem}
+
+/* ---------- Module shell ---------- */
+.mod{height:100%;display:flex;flex-direction:column;--mct:color-mix(in srgb,var(--mc) 62%,var(--ink));--mcs:color-mix(in srgb,var(--mc) 10%,var(--card))}
+.bar{display:flex;align-items:center;gap:.8rem;padding:.7rem 1rem;border-bottom:3px solid var(--mc);background:var(--card)}
+.bar-title{display:flex;align-items:center;gap:.7rem;min-width:0;flex:1;line-height:1.2}
+.bar-title .e{font-size:1.8rem}
+.bar-title small{display:block;color:var(--muted);font-size:.8rem}
+.bar-title b{font-size:1.1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.bar-prog{display:flex;align-items:center;gap:.6rem;min-width:11rem}
+.meter{flex:1;height:.8rem;border-radius:1rem;background:var(--track);overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--mc);border-radius:1rem;transition:width .5s}
+.bar-prog span{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.body{flex:1;min-height:0;display:grid;grid-template-columns:19rem 1fr}
+.rail{overflow-y:auto;padding:.8rem;border-right:2px solid var(--line);background:color-mix(in srgb,var(--card) 70%,transparent);display:flex;flex-direction:column;gap:.45rem}
+.rail h4{margin:.7rem .3rem .1rem;font-size:.78rem;font-weight:600;color:var(--muted)}
+.ri{display:grid;grid-template-columns:2.2rem 1fr 1.6rem;align-items:center;gap:.6rem;text-align:left;border:2px solid var(--line);background:var(--card);border-radius:.9rem;padding:.55rem .6rem;min-height:3.4rem}
+.ri .rn{width:2.2rem;height:2.2rem;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.9rem;background:var(--track)}
+.ri .rt b{display:block;font-size:.88rem;line-height:1.2;font-weight:600}
+.ri .rt small{color:var(--muted);font-size:.74rem}
+.ri .rc{width:1.6rem;height:1.6rem;border-radius:50%;display:grid;place-items:center;font-size:.85rem;color:transparent;border:2px solid var(--line)}
+.ri.done .rc{background:var(--mc);border-color:var(--mc);color:#fff}
+.ri.done .rn{background:color-mix(in srgb,var(--mc) 25%,var(--card))}
+.ri.active{border-color:var(--mc);background:var(--mcs);box-shadow:0 0 0 2px var(--mc) inset}
+.ri.active .rn{background:var(--mc);color:#fff}
+.stage{overflow-y:auto;padding:1.4rem 2rem 2rem;touch-action:pan-y}
+.stage-in{max-width:68rem;margin:0 auto}
+.meta{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:.85rem}
+.lvl{--lc:#64748B;border-radius:2rem;padding:.2rem .8rem;font-weight:600;font-size:.82rem;color:color-mix(in srgb,var(--lc) 62%,var(--ink));background:color-mix(in srgb,var(--lc) 14%,var(--card));border:1.5px solid color-mix(in srgb,var(--lc) 45%,transparent)}
+.l-grund{--lc:#15803D}.l-regel{--lc:#2563EB}.l-erw{--lc:#EA580C}.l-exp{--lc:#DC2626}
+.stage h2{font-size:1.9rem;line-height:1.2;margin:.5rem 0 .4rem}
+.prompt{max-width:62ch;margin:0 0 1rem;font-size:1.1rem;color:var(--ink)}
+details{margin:0 0 .8rem;border:2px dashed var(--line);border-radius:.9rem;background:color-mix(in srgb,var(--card) 80%,transparent)}
+details summary{min-height:2.8rem;padding:.55rem 1rem;font-weight:600;font-size:.9rem;cursor:pointer;display:flex;align-items:center}
+details .dbody{padding:0 1rem 1rem;white-space:pre-line;max-width:70ch;font-size:1rem}
+details.hint{border-color:color-mix(in srgb,#EA580C 50%,var(--line))}
+.note-open{display:inline-block;margin:0 0 .8rem;font-size:.9rem;padding:.3rem .9rem;border-radius:.7rem;background:color-mix(in srgb,var(--mc) 14%,var(--card));color:var(--mct);font-weight:600}
+
+.rows{display:flex;flex-direction:column;gap:.8rem;margin-top:.4rem}
+.row{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1.2rem;align-items:center;text-align:left;width:100%;min-height:4.4rem;padding:.9rem 1.2rem;border:2px solid var(--line);border-radius:1.1rem;background:var(--card);position:relative}
+.row.solo{grid-template-columns:2rem minmax(0,1fr)}
+.row .mark{width:1rem;height:1rem;border-radius:50%;background:var(--mc);justify-self:center;opacity:.5}
+.row .q{font-weight:600;font-size:1.05rem}
+.a{position:relative;display:block;min-height:2.4rem;border-bottom:3px dotted var(--line);padding:.2rem 0 .3rem}
+.a .tap{position:absolute;inset:0;display:flex;align-items:center;color:var(--muted);font-size:.9rem}
+.ink{display:block;color:var(--sol);font-size:1.05rem;line-height:1.4;white-space:pre-line;clip-path:inset(0 100% 0 0)}
+.ink.hand{font-family:"Caveat","Segoe Print","Bradley Hand",cursive;font-weight:600;font-size:1.7rem;line-height:1.15}
+.row.open{border-color:color-mix(in srgb,var(--mc) 60%,var(--line));background:var(--mcs)}
+.row.open::after{content:"✓";position:absolute;top:-.55rem;right:.9rem;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--mc);color:#fff;display:grid;place-items:center;font-size:.95rem;font-weight:700}
+.row.open .tap,.gap.open .tap{display:none}
+.row.open .ink,.gap.open .ink{clip-path:inset(0 0 0 0);transition:clip-path .7s steps(18,end)}
+.row.open .a{border-bottom-color:transparent}
+
+.wordbank{display:flex;flex-wrap:wrap;gap:.6rem;margin:.2rem 0 1rem}
+.chip{padding:.4rem 1rem;border-radius:.7rem;border:2px solid var(--line);background:var(--card);font-weight:600;transition:opacity .3s}
+.chip.used{opacity:.35;text-decoration:line-through}
+.gaptext{background:var(--card);border:2px dashed var(--line);border-radius:1.1rem;padding:1rem 1.4rem}
+.gaptext p{margin:.5rem 0;font-size:1.3rem;line-height:2.4}
+.gap{display:inline-block;vertical-align:baseline;min-width:7ch;margin:0 .15rem;padding:0 .4rem;min-height:2.6rem;border:0;border-bottom:3px dotted var(--mc);background:color-mix(in srgb,var(--mc) 8%,transparent);border-radius:.4rem .4rem 0 0;position:relative;text-align:center}
+.gap .ink{display:block;font-family:"Caveat","Segoe Print","Bradley Hand",cursive;font-weight:600;font-size:1.7rem;line-height:1.4}
+.gap.open{border-bottom-color:transparent;background:transparent}
+
+.learned{margin-top:1.6rem;display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:center;padding:1.1rem 1.4rem;border-radius:1.2rem}
+.learned h3{margin:0 0 .2rem;font-size:1.05rem}
+.learned p{margin:0;font-size:1.15rem;max-width:60ch}
+.learned.off{border:2px dashed var(--line);color:var(--muted)}
+.learned.on{border:2px solid var(--mc);background:var(--mcs)}
+.stamp{width:5.6rem;height:5.6rem;border-radius:50%;border:4px double var(--mct);color:var(--mct);display:grid;place-items:center;text-align:center;font-weight:700;line-height:1.1;font-size:.9rem;transform:rotate(-12deg);flex:none}
+.stamp i{font-style:normal;font-size:1.7rem;display:block}
+.stamp.ghost{border-color:var(--line);color:var(--line);font-size:2rem}
+.pop .stamp{animation:stampIn .55s cubic-bezier(.2,1.5,.4,1)}
+@keyframes stampIn{from{transform:scale(2.4) rotate(-45deg);opacity:0}to{transform:scale(1) rotate(-12deg);opacity:1}}
+
+.foot{display:flex;align-items:center;gap:.7rem;padding:.7rem 1rem;border-top:2px solid var(--line);background:var(--card)}
+.foot .count{color:var(--muted);font-size:.9rem;padding:0 .6rem}
+.foot .spacer{flex:1}
+
+/* ---------- Summary / Lernpass ---------- */
+.sum-head{display:flex;gap:1.4rem;align-items:center;margin:.2rem 0 1.2rem}
+.sum-head h2{margin:0}
+.sum-head p{margin:.2rem 0 0;color:var(--muted)}
+.learn-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.6rem}
+.li{display:grid;grid-template-columns:2.2rem minmax(0,1fr) auto;gap:.9rem;align-items:center;text-align:left;width:100%;min-height:3.6rem;padding:.7rem 1rem;border-radius:1rem;border:2px solid var(--line);background:var(--card)}
+.li .c{width:2.2rem;height:2.2rem;border-radius:50%;display:grid;place-items:center;border:2px solid var(--line);color:transparent;font-weight:700}
+.li b{display:block;font-size:1.05rem;font-weight:500}
+.li small{color:var(--muted);font-size:.8rem}
+.li.on{border-color:color-mix(in srgb,var(--mc) 55%,var(--line));background:var(--mcs)}
+.li.on .c{background:var(--mc);border-color:var(--mc);color:#fff}
+.li.off b{color:var(--muted)}
+.pass{height:100%;display:flex;flex-direction:column}
+.pass-body{flex:1;overflow-y:auto;padding:1.4rem 2rem 2rem}
+.pass-mod{--mct:color-mix(in srgb,var(--mc) 62%,var(--ink));--mcs:color-mix(in srgb,var(--mc) 10%,var(--card));max-width:68rem;margin:0 auto 2rem}
+.pass-mod h3{display:flex;align-items:center;gap:.7rem;margin:0 0 .7rem;font-size:1.3rem;color:var(--mct)}
+.pass-mod h3 span.cnt{font-size:.9rem;font-weight:500;color:var(--muted)}
+.pass-bar{display:flex;align-items:center;gap:.8rem;padding:.7rem 1rem;border-bottom:3px solid var(--ink);background:var(--card)}
+.pass-bar h1{margin:0;font-size:1.3rem;flex:1}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  html{font-size:16px}
+  .cards{grid-template-columns:1fr}
+  .body{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .rail{flex-direction:row;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:2px solid var(--line);padding:.5rem}
+  .rail h4{display:none}
+  .ri{flex:none;width:13rem}
+  .bar-prog{display:none}
+  .btn span.lbl{display:none}
+  .stage{padding:1rem}
+  .row{grid-template-columns:1fr;gap:.5rem}
+  .foot{flex-wrap:wrap}
+  .foot .count{display:none}
+  .learned{grid-template-columns:1fr}
+  .home{padding:1rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* =====================================================================
+   DATEN – Module, Aufgaben, Lösungen, Lernziele
+   ===================================================================== */
+const R=(q,a)=>({q,a});
+const N=a=>({a});
+
+const LEVELS={
+  basis:{label:"Einstieg",cls:""},
+  grund:{label:"Grundstandard",cls:"l-grund"},
+  regel:{label:"Regelstandard",cls:"l-regel"},
+  erw:{label:"Erweiterter Standard",cls:"l-erw"},
+  exp:{label:"Expertenstandard",cls:"l-exp"}
+};
+
+const MODULES=[
+/* ------------------------------ MODUL 1 ------------------------------ */
+{id:"m1",nr:1,emoji:"🧭",color:"#0F766E",title:"Euer neues Fach GSW",sub:"Erdkunde, Geschichte, Politik-Wirtschaft und das Zusammenleben in Gemeinschaften",
+tasks:[
+ {sheet:"Arbeitsblatt 1",level:"basis",title:"Die drei Fächer im Überblick",ref:"zu Text T1",
+  prompt:"Lies Text T1. Ergänze die drei Fächer, aus denen GSW besteht.",
+  mat:{title:"Text T1: Was ist Gesellschaftslehre?",text:"Ein neues Fach steht auf dem Stundenplan: Gesellschaftslehre. Das Fach beschäftigt sich mit den vielfältigen Formen des gesellschaftlichen Zusammenlebens von Menschen. Dies betrifft Menschen in Deutschland, Europa und anderen Teilen der Welt.\n\nEs geht um die Lebensweise von Menschen in der Vergangenheit und der Gegenwart. Dein neues Fach Gesellschaftslehre verbindet somit Erdkunde, Geschichte und Politik-Wirtschaft miteinander."},
+  items:[R("Fach 1","Erdkunde"),R("Fach 2","Geschichte"),R("Fach 3","Politik-Wirtschaft")],
+  learned:"Ich kenne den Namen meines Fachs – Gesellschaftslehre (GSW) – und seine 3 Teilbereiche."},
+ {sheet:"Arbeitsblatt 1",level:"basis",title:"Bild-Zuordnung",ref:"zu Material M1",
+  prompt:"Drei Kinder überlegen auf dem Schulhof, was man in GSW macht. Trage das passende Fach ein.",
+  items:[R("🌍 Kind links: Lupe, Globus und Landkarten","Erdkunde"),R("🏰 Kind Mitte: Ritterburg, Schwert, alte Urkunde","Geschichte"),R("🗳️ Kind rechts: Wahlzettel, Wahlurne, Paragrafenzeichen (§)","Politik-Wirtschaft")],
+  learned:"Ich kann Symbole und Bilder den richtigen Fächern zuordnen."},
+ {sheet:"Arbeitsblatt 1",level:"basis",title:"Fragen an die Welt",ref:"zu den Texten T3 & T4",
+  prompt:"Welche Frage gehört zu welchem Fach? E = Erdkunde, G = Geschichte, P = Politik-Wirtschaft.",
+  mat:{title:"Texte T3 & T4: Was erwartet euch im Fach GSW?",text:"Im Mittelpunkt der Gesellschaftslehre steht das Zusammenleben der Menschen: Wie haben es Menschen in der Steinzeit geschafft zu überleben? Wie nutzen wir die Natur in Niedersachsen und weltweit? Was bedeutet Demokratie und wie dürfen Kinder mitbestimmen? Wie arbeiten wir heute und in der Zukunft? GSW hilft dir, die Welt zu verstehen und mitzugestalten."},
+  items:[R("Wie haben die Menschen in der Alt- und Jungsteinzeit überlebt?","G – Geschichte"),R("Dürfen Kinder in ihrer Schule und in der Stadt mitbestimmen?","P – Politik-Wirtschaft"),R("Wie nutzen wir die Natur und den Raum in Niedersachsen und weltweit?","E – Erdkunde"),R("Was bedeutet Geld für uns und wie verändert sich unsere Arbeitswelt?","P – Politik-Wirtschaft")],
+  learned:"Ich kann spannende Leitfragen dem passenden Fach (E, G oder P) zuordnen."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"grund",title:"Lückentext zum Zusammenleben",ref:"zu Text T2",
+  prompt:"Setze die Wörter aus dem Wortspeicher in den Lückentext ein.",
+  mat:{title:"Text T2: In Gesellschaften zusammenleben",text:"Du sitzt in deiner Klasse. Deine Klasse ist ein Teil deiner Schule und deine Schule ist eine von vielen Schulen in Deutschland. Du bist also ein Teil der Schülergemeinschaft.\n\nDas Zusammenleben in deiner Schule ist durch eine Schulordnung geregelt. So leben und arbeiten viele unterschiedliche Gemeinschaften zusammen (z. B. Familie, Verein, Betrieb). Jede dieser Gemeinschaften hat eigene Ziele. Alle Gemeinschaften bilden zusammen die Gesellschaft. Zusammen mit anderen kann der Mensch besser überleben oder große Ziele erreichen."},
+  gaps:{words:["Klasse","Schulordnung","Gemeinschaften","Regeln"],lines:["Menschen leben in verschiedenen {Gemeinschaften} zusammen.","Du bist ein Teil deiner {Klasse} und deiner Schule.","Damit alle gut miteinander auskommen, gibt es feste {Regeln}.","An unserer Schule heißt dieses Regelwerk {Schulordnung}."]},
+  learned:"Ich weiß: Viele Gemeinschaften bilden zusammen die Gesellschaft – und feste Regeln (z. B. die Schulordnung) helfen beim Zusammenleben."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"grund",title:"Meine Gemeinschaften",ref:"",open:true,
+  prompt:"Kreuze an, zu welchen Gemeinschaften du gehörst, und ergänze eine weitere.",
+  items:[R("Ankreuzen","Individuell – jeder Mensch gehört zu mehreren Gemeinschaften (Familie, Schulklasse, Verein …)."),R("Weitere Gemeinschaft (Beispiele)","Freundeskreis · Pfadfinder · Jugendfeuerwehr · Kirchengemeinde · Nachbarschaft · Spielgruppe")],
+  learned:"Ich kann Gemeinschaften nennen, zu denen ich selbst gehöre."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"regel",title:"Bedeutung des Fachs GSW",ref:"zu Text T1 & T2",
+  prompt:"Erkläre in eigenen Worten: Womit beschäftigt sich das Fach GSW?",
+  items:[N("GSW beschäftigt sich mit dem Zusammenleben der Menschen – in Deutschland, Europa und der Welt, in der Vergangenheit und in der Gegenwart."),N("Es verbindet drei Bereiche: Erdkunde (Raum und Natur), Geschichte (früher) und Politik-Wirtschaft (Regeln, Mitbestimmung, Arbeit, Geld)."),N("GSW hilft, die Welt zu verstehen und sie mitzugestalten.")],
+  learned:"Ich kann in eigenen Worten erklären, womit sich das Fach GSW beschäftigt."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"regel",title:"Gemeinschaften und ihre Ziele",ref:"Partnerarbeit",open:true,
+  prompt:"Nennt zwei Gemeinschaften und beschreibt das gemeinsame Ziel der Gruppe.",
+  items:[R("Familie","Füreinander sorgen, sich geborgen fühlen, den Alltag gemeinsam meistern."),R("Sportverein / Tanzgruppe","Gemeinsam Sport treiben, besser werden, Wettkämpfe oder Auftritte meistern."),R("Schulklasse","Gemeinsam lernen und fair miteinander auskommen."),R("Betrieb","Waren herstellen oder Dienstleistungen anbieten und damit Geld verdienen.")],
+  learned:"Ich kann Gemeinschaften nennen und ihr gemeinsames Ziel beschreiben."},
+ {sheet:"Arbeitsblatt 2 (Teil B)",level:"erw",title:"Warum braucht jede Gemeinschaft Regeln?",ref:"",
+  prompt:"Begründe ausführlich, warum Gruppen (Klasse, Sportverein, Betrieb) feste Regeln benötigen. Was würde ohne Regeln passieren?",
+  items:[N("Regeln sorgen für Ordnung: Alle wissen, was erlaubt ist und was nicht."),N("Regeln machen fair: Sie schützen auch die Schwächeren, niemand wird übergangen."),N("Regeln helfen, Streit zu vermeiden oder gerecht zu lösen."),N("Ohne Regeln gäbe es Chaos und Streit – es würde das Recht des Stärkeren gelten. Die Gemeinschaft könnte ihre Ziele nicht erreichen (z. B. eine Mannschaft ohne Spielregeln).")],
+  learned:"Ich kann begründen, warum Gruppen feste Regeln brauchen und was ohne Regeln passieren würde."},
+ {sheet:"Arbeitsblatt 2 (Teil B)",level:"erw",title:"Eigene Forscher- und Zukunftsfragen",ref:"",open:true,
+  prompt:"Formuliere zwei eigene spannende Fragen an das Fach GSW und begründe dein Interesse.",
+  items:[R("Beispiel Umwelt (Erdkunde)","Wie können wir in Niedersachsen Energie gewinnen, ohne die Natur zu zerstören? – Das betrifft unsere Zukunft."),R("Beispiel Ernährung","Wie wird die wachsende Menschheit satt? – Ich möchte wissen, woher unser Essen kommt."),R("Beispiel Technik / Arbeit","Welche Berufe gibt es in 20 Jahren noch? – Ich will wissen, wie ich später arbeiten kann."),R("Beispiel Zusammenleben","Wie können Kinder in der Stadt mitbestimmen? – Ich möchte gehört werden.")],
+  learned:"Ich kann eigene Leitfragen an GSW stellen und mein Interesse begründen."},
+ {sheet:"Arbeitsblatt 2 (Teil C)",level:"exp",title:"Zukunftsfragen ganzheitlich erforschen",ref:"Beispiel: „Wie entwickeln sich Städte früher, heute und morgen?“",open:true,
+  prompt:"Wähle ein großes Thema. Zeige, warum man zur Lösung alle drei Fächer braucht.",
+  items:[R("🌍 Erdkunde-Blickwinkel","Standort (Fluss, Handelswege, fruchtbarer Boden), Platz und Fläche, Klima, Verkehr, Umweltprobleme wie Hitze und Flächenverbrauch."),R("⏳ Geschichts-Blickwinkel","Städte entstanden an Flüssen und Handelswegen, wuchsen im Mittelalter hinter Mauern und mit der Industrialisierung stark – Ursachen und Entwicklung von früher bis heute."),R("⚖️ Politik- & Wirtschafts-Blickwinkel","Stadtrat und Gesetze (Bauplanung), Mitbestimmung der Bürger, Arbeitsplätze, Mieten und Geld, Gerechtigkeit (bezahlbarer Wohnraum).")],
+  learned:"Ich kann gesellschaftliche Themen aus der Sicht aller drei Fächer analysieren."}
+]},
+
+/* ------------------------------ MODUL 2 ------------------------------ */
+{id:"m2",nr:2,emoji:"⏳",color:"#B45309",title:"Jeder Mensch hat Geschichte",sub:"Erinnerungsstücke, Zeitstrahl und die vier Epochen",
+tasks:[
+ {sheet:"Arbeitsblatt 1",level:"basis",title:"Erinnerungsstücke zuordnen",ref:"zu Material M3 & M4",
+  prompt:"Welcher Gegenstand gehört zu welchem Meilenstein in Leonies Leben?",
+  mat:{title:"Texte T1 & T2: Auf Spurensuche in deiner Geschichte",text:"Erinnerst du dich an deinen ersten Schultag? An die Schultüte oder alte Fotos? Von damals bis heute hast du viele Dinge erlebt. Du lernst gerade neue Mitschüler kennen – all das ist Teil deiner eigenen Geschichte. Deine Geschichte entdeckst du am besten mit alten Fotos, Heften, der Geburtsurkunde oder Erzählungen deiner Großeltern."},
+  items:[R("🎒 Schultüte (2016)","Einschulung – Leonie kommt in die Schule."),R("🦷 Milchzahndose (2015)","Der erste Milchzahn fällt heraus."),R("🎵 Blockflöte (2018)","Der Flötenunterricht beginnt.")],
+  learned:"Ich kann Erinnerungsstücke als Quellen untersuchen und Lebensereignissen zuordnen."},
+ {sheet:"Arbeitsblatt 1",level:"basis",title:"Eigene Geschichtsquellen sammeln",ref:"",open:true,
+  prompt:"Nenne 3 Gegenstände, mit denen du deine eigene Vergangenheit beweisen kannst.",
+  items:[R("Mögliche Beispiele","Babyfoto · Geburtsurkunde · Schultüte · Zeugnisse und Hefte · Lieblingsspielzeug · Erzählungen der Großeltern")],
+  learned:"Ich weiß, warum jeder Mensch eine eigene Geschichte hat und womit ich sie belegen kann."},
+ {sheet:"Arbeitsblatt 1",level:"basis",title:"Epochen-Rätsel: Wann geschah was?",ref:"zu M1",
+  prompt:"Ordne jedes Ereignis der richtigen Epoche zu: 1 = Ur- & Frühgeschichte · 2 = Antike · 3 = Mittelalter · 4 = Neuzeit.",
+  mat:{title:"Text T3: Was ist ein Zeitstrahl und was sind Epochen?",text:"Ein Zeitstrahl ordnet Ereignisse in eine zeitliche Reihenfolge (von früher nach heute). Die Geschichte der Menschheit ist sehr lang. Um sich zurechtzufinden, teilen Historiker die Vergangenheit in große Zeitabschnitte ein: die Epochen."},
+  hint:"Der Buchdruck (um 1450) liegt am Übergang Mittelalter/Neuzeit. Hier ist 4 – Neuzeit gewählt (Epochenumbruch, vgl. Teil B). Prüfe das bitte mit dem Zeitstrahl im Buch (S. 16–17). Außerdem: Karl der Große regierte ca. 768–814 (frühes Mittelalter); die Angabe „10.–14. Jahrhundert“ auf dem Blatt passt eher zum Ritter- und Burgenzeitalter. Das Ergebnis (3 – Mittelalter) bleibt gleich.",
+  items:[R("Johannes Gutenberg erfindet um 1450 den Buchdruck mit beweglichen Lettern.","4 – Neuzeit"),R("Rom wird der Sage nach 753 v. Chr. gegründet; die Akropolis in Athen entsteht.","2 – Antike"),R("Ritter leben auf Burgen und Kaiser Karl der Große regiert.","3 – Mittelalter"),R("Erste Menschen stellen vor ca. 2 Millionen Jahren einfache Steinwerkzeuge her.","1 – Ur- & Frühgeschichte")],
+  learned:"Ich kann den Aufbau eines Zeitstrahls und die 4 Epochen erklären."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"grund",title:"Lückentext zum Zeitstrahl",ref:"zu Text T3",
+  prompt:"Setze die passenden Wörter in den Lückentext ein.",
+  gaps:{words:["Zeitstrahl","Geburtsjahr","links","Reihenfolge"],lines:["Mit einem {Zeitstrahl} ordnet man Ereignisse zeitlich.","Ganz {links} steht immer das {Geburtsjahr}.","So sieht man sofort die richtige {Reihenfolge} aller Erlebnisse."]},
+  learned:"Ich kann einen Zeitstrahl lesen: Ereignisse stehen in zeitlicher Reihenfolge, links beginnt er."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"grund",title:"Meine Lebens-Spuren",ref:"",open:true,
+  prompt:"Kreuze an, welche Erinnerungsstücke es aus deinem bisherigen Leben gibt.",
+  items:[R("Ankreuzen","Individuell: Babyfoto · Schultüte der 1. Klasse · Lieblingsspielzeug · Urkunde / Zeugnis / Heft"),R("Weiteres Erinnerungsstück (Beispiele)","Kuscheltier · Zahndose · Medaille · Eintrittskarte · Reisesouvenir")],
+  learned:"Ich kann Erinnerungsstücke aus meinem eigenen Leben benennen."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"regel",title:"Leonies Geschichte nacherzählen",ref:"zu Material M4",
+  prompt:"Beschreibe Leonies Lebensweg von 2010 bis heute in eigenen Worten.",
+  items:[R("2010","Leonie wird geboren."),R("2014","Sie bekommt ihr erstes Fahrrad."),R("2015","Der erste Milchzahn fällt heraus."),R("2016","Sie kommt in die Schule und bekommt eine Schultüte."),R("2018","Sie beginnt mit dem Flötenunterricht."),R("2020","Leonie kommt in die 5. Klasse.")],
+  learned:"Ich kann einen Zeitstrahl lesen und eine Lebensgeschichte in der richtigen Reihenfolge nacherzählen."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"regel",title:"Lebensereignisse vergleichen",ref:"Partnerarbeit",open:true,
+  prompt:"Vergleicht eure Lebenswege: Welche gemeinsamen Meilensteine gibt es bei euch?",
+  items:[R("Mögliche Meilensteine","Geburt · erstes Fahrrad · erster Milchzahn · Einschulung · Wechsel auf die weiterführende Schule")],
+  learned:"Ich kann meine Lebensereignisse mit denen anderer vergleichen und eigene Stationen beschreiben."},
+ {sheet:"Arbeitsblatt 2 (Teil B)",level:"erw",title:"Warum verändern Erfindungen eine Epoche?",ref:"Buch S. 17, Text T3",
+  prompt:"Begründe, warum der Buchdruck (um 1450) oder das Automobil (um 1900) das Zusammenleben der Menschen komplett verändert haben.",
+  items:[N("Buchdruck: Bücher werden schneller und billiger hergestellt (vorher wurde von Hand abgeschrieben). Mehr Menschen können lesen, Wissen, Ideen und Nachrichten verbreiten sich viel schneller."),N("Automobil: Menschen und Waren kommen schneller und weiter. Neue Berufe und Fabriken entstehen, Städte und Straßen verändern sich, Arbeit und Freizeit sehen anders aus."),N("Fazit: Große Erfindungen verändern, wie Menschen leben, arbeiten und denken. Deshalb nutzen Historiker sie, um Zeitabschnitte (Epochen) voneinander zu trennen.")],
+  learned:"Ich kann begründen, warum große Erfindungen den Beginn einer neuen Epoche markieren können."},
+ {sheet:"Arbeitsblatt 2 (Teil B)",level:"erw",title:"Eigene historische Forscherfragen",ref:"",open:true,
+  prompt:"Formuliere zwei eigene spannende Fragen an die Vergangenheit und begründe dein Interesse.",
+  items:[R("Beispiel 1","Wie sah der Alltag meiner Großeltern aus, als sie so alt waren wie ich? – Ich möchte wissen, was damals anders war."),R("Beispiel 2","Was war in meinem Geburtsjahr los? – Ich will verstehen, wie die Zeit war, in die ich geboren wurde.")],
+  learned:"Ich kann eigene historische Fragen stellen und mein Interesse begründen."},
+ {sheet:"Arbeitsblatt 2 (Teil C)",level:"exp",title:"Die Entstehung der Welt ganzheitlich erforschen",ref:"zu Erdzeituhr M2 & Zeitstrahl M1",
+  prompt:"Zeige, warum man zur Erforschung der Menschheitsgeschichte alle drei GSW-Fachbereiche benötigt.",
+  items:[R("🌍 Erdkunde-Perspektive","Die Erde entstand vor ca. 4,6 Milliarden Jahren. Meere, Land und Klima entwickelten sich und bildeten den Naturraum als Lebensgrundlage."),R("⏳ Geschichts-Perspektive","Vormenschen lebten vor ca. 5 Mio. Jahren, erste Steinwerkzeuge entstanden vor ca. 2 Mio. Jahren. Historiker ordnen das in Epochen auf dem Zeitstrahl."),R("⚖️ Politik- & Wirtschafts-Perspektive","Menschen lebten in Gruppen, teilten Arbeit (jagen, sammeln, Feuer hüten, Kinder versorgen) und brauchten Regeln für das Zusammenleben.")],
+  learned:"Ich kann die Menschheitsgeschichte aus den Blickwinkeln aller drei Fächer analysieren."}
+]},
+
+/* ------------------------------ MODUL 3 ------------------------------ */
+{id:"m3",nr:3,emoji:"🏺",color:"#6D28D9",title:"Woher wir wissen, was früher war",sub:"Historische Quellen, Archäologen, Historiker und Pompeji",
+tasks:[
+ {sheet:"Arbeitsblatt 1 (Teil 1)",level:"basis",title:"Die Arbeit der Archäologen",ref:"zu Text T2, Bild M1 & Video",
+  prompt:"Beschreibe genau, welche Aufgaben Archäologen bei einer Ausgrabung haben und wie sie vorgehen.",
+  mat:{title:"Texte T1 & T2: Quellen & Steine zum Sprechen bringen",text:"Alles, was wir über die Vergangenheit wissen, erfahren wir durch Quellen: alte Fotos, Gemälde, Briefe, Tagebücher, aber auch Burgen, Kirchen und Ruinen. Immer wieder werden im Boden Überreste gefunden: alte Mauersteine, Holzstücke, Tonscherben, Knochen oder Stofffetzen.\n\nDann werden Archäologen gerufen. Ihr Beruf ist es, nach Bodenfunden zu suchen, sie auszugraben, zu vermessen und zu beschreiben. Sie bestimmen das Alter der Funde und bereiten sie für Ausstellungen in Museen vor."},
+  items:[R("1. Suchen","Nach Bodenfunden suchen: Mauersteine, Holzstücke, Tonscherben, Knochen, Stofffetzen."),R("2. Ausgraben","Die Funde vorsichtig aus dem Boden freilegen (Spaten, Kelle, Pinsel)."),R("3. Vermessen & beschreiben","Fundort genau vermessen, Funde beschreiben und dokumentieren."),R("4. Alter bestimmen","Herausfinden, wie alt die Funde sind."),R("5. Für das Museum vorbereiten","Funde restaurieren und für Ausstellungen in Museen vorbereiten.")],
+  learned:"Ich kann die Arbeit von Archäologen beschreiben und Bodenfunde als Sachquellen einordnen."},
+ {sheet:"Arbeitsblatt 1 (Teil 1)",level:"basis",title:"Eigene Quellen finden",ref:"zu Text T1",open:true,
+  prompt:"Nenne 3 persönliche Gegenstände, die einem Forscher in 100 Jahren als Quelle über dich dienen könnten.",
+  items:[R("Mögliche Beispiele","Handy mit Fotos · Tagebuch oder Hefte · Zeugnis · Lieblingsspielzeug · Kleidung · Schmuck")],
+  learned:"Ich kann erklären, was historische Quellen sind und warum wir sie brauchen."},
+ {sheet:"Arbeitsblatt 1 (Teil 2)",level:"basis",title:"Quellen-Rätsel: Zu welcher Quellenart gehört das?",ref:"zu M4 & M2",
+  prompt:"Trage die richtige Quellenart ein: T = Textquelle, B = Bildquelle, S = Sachquelle.",
+  mat:{title:"Material M4: Übersicht über die Quellenarten",text:"Textquellen: Briefe, Gesetzestexte, Inschriften, Tagebücher, Urkunden, Verträge, Zeitungen\nBildquellen: Fotos, Gemälde, Höhlenmalereien, Karikaturen, Mosaike\nSachquellen: Bauwerke, Gräber, Kleidungsstücke, Möbel, Schmuck, Statuen, Werkzeuge"},
+  items:[R("Handgeschriebener Brief oder Tagebuch einer Königin","T – Textquelle"),R("Farbiges Wandmosaik einer Theatergruppe in Pompeji (M2)","B – Bildquelle"),R("Rostige Pfeilspitze aus Eisen und zerbrochene Tonschale","S – Sachquelle"),R("Steinernes römisches Stadttor und Ruinen einer Ritterburg","S – Sachquelle")],
+  learned:"Ich kann Quellen erklären und den drei Quellenarten (Text-, Bild-, Sachquelle) richtig zuordnen."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"grund",title:"Lückentext zur Geschichtsforschung",ref:"",
+  prompt:"Setze die passenden Wörter in den Lückentext ein.",
+  gaps:{words:["Quellen","Archäologen","Bodenfunde","Historiker"],lines:["Alles, was wir über früher wissen, verraten uns {Quellen}.","Im Erdreich graben {Archäologen} nach alten {Bodenfunde}.","In alten Büchern, Schriften und Urkunden forschen dagegen die {Historiker}."]},
+  learned:"Ich weiß: Archäologen erforschen Bodenfunde, Historiker erforschen Schriften und Bilder – beide nutzen Quellen."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"grund",title:"Quellen-Check",ref:"zu Material M4",
+  prompt:"Kreuze an, um welche Quellenart es sich handelt.",
+  hint:"Alle vier Zuordnungen auf dem Blatt sind bereits richtig beschriftet – es werden alle vier Kästchen angekreuzt.",
+  items:[R("Foto aus dem Familienalbum","Bildquelle ✓"),R("Geburtsurkunde / Zeugnis","Textquelle ✓"),R("Alter Steinbeil-Fund","Sachquelle ✓"),R("Zeitungsbericht von 1950","Textquelle ✓")],
+  learned:"Ich kann Quellenarten unterscheiden."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"regel",title:"Historiker als Detektive",ref:"zu Text T3",
+  prompt:"Erkläre in eigenen Worten, warum Historiker fast wie Detektive arbeiten müssen.",
+  mat:{title:"Texte T3 & T4: In Quellen lesen & Darstellungen",text:"Historiker graben nicht im Boden, sondern spüren der Vergangenheit in Archiven und Bibliotheken nach. Sie entziffern, ordnen und prüfen schriftliche Quellen, Bildquellen und Überreste – fast wie Detektive. Alles, was sie herausfinden, veröffentlichen sie in Büchern, Museen oder Filmen (Darstellungen). Weil Forscher dieselben Quellen unterschiedlich bewerten können, entstehen manchmal widersprüchliche Darstellungen."},
+  items:[N("Historiker suchen Spuren der Vergangenheit in Archiven und Bibliotheken."),N("Sie entziffern, ordnen und prüfen Quellen genau – wie Detektive, die Hinweise sammeln und prüfen."),N("Aus vielen kleinen Hinweisen setzen sie ein Bild der Vergangenheit zusammen und veröffentlichen es als Darstellung.")],
+  learned:"Ich kann erklären, warum Historiker wie Detektive arbeiten."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"regel",title:"Archäologe und Historiker im Vergleich",ref:"zu T2 & T3 · Partnerarbeit",
+  prompt:"Worin unterscheiden sich Arbeitsort, Werkzeuge und Fundstücke der beiden Berufe?",
+  items:[R("Arbeitsort","Archäologe: Ausgrabungsstelle im Gelände\nHistoriker: Archive und Bibliotheken"),R("Werkzeuge","Archäologe: Spaten, Kelle, Pinsel, Maßband\nHistoriker: Lupe, Computer, Wissen über alte Schriften"),R("Fundstücke","Archäologe: Sachquellen (Scherben, Knochen, Mauerreste)\nHistoriker: Schrift- und Bildquellen (Briefe, Urkunden, Gemälde)")],
+  learned:"Ich kann die Arbeit von Archäologen und Historikern vergleichen."},
+ {sheet:"Arbeitsblatt 2 (Teil B)",level:"erw",title:"Quelle oder Darstellung?",ref:"zu T4 & Bild M3",
+  prompt:"Ist die Computerrekonstruktion eines Hauses in Pompeji von 1997 (M3) eine Quelle oder eine Darstellung? Warum kommen Forscher trotz gleicher Funde zu unterschiedlichen Darstellungen?",
+  items:[N("M3 ist eine moderne Darstellung, keine Quelle: Die Rekonstruktion wurde erst 1997 erstellt, nicht in der Römerzeit. Forscher haben sie aus Funden und Wissen aufgebaut."),N("Eine Quelle stammt aus der Zeit selbst (z. B. das Wandmosaik M2 aus dem 1. Jh. n. Chr.). Eine Darstellung entsteht später und erzählt oder erklärt die Vergangenheit."),N("Verschiedene Darstellungen entstehen, weil Funde lückenhaft sind, Forscher Lücken mit Vermutungen füllen und Quellen unterschiedlich bewerten (T4).")],
+  learned:"Ich kann Quellen kritisch von Darstellungen unterscheiden."},
+ {sheet:"Arbeitsblatt 2 (Teil B)",level:"erw",title:"Eigene historische Forscherfragen",ref:"",open:true,
+  prompt:"Formuliere zwei eigene spannende Fragen an Archäologen oder Historiker und begründe dein Interesse.",
+  items:[R("Beispiel 1","Wie haben die Menschen in Pompeji im Alltag gelebt? – Ich möchte wissen, wie eine römische Stadt funktionierte."),R("Beispiel 2","Gibt es noch unentdeckte Schriften unter der Asche? – Sie könnten neue Geheimnisse verraten."),R("Beispiel 3","Wie finden Archäologen heraus, wie alt ein Fund ist? – Mich interessieren die Grabungsmethoden.")],
+  learned:"Ich kann eigene Forscherfragen formulieren und mein Interesse begründen."},
+ {sheet:"Arbeitsblatt 2 (Teil C)",level:"exp",title:"3-Fächer-Expertenanalyse zu Pompeji",ref:"zu Wandmosaik M2 & Rekonstruktion M3",
+  prompt:"Zeige, warum man zur Erforschung der versunkenen Stadt Pompeji alle drei GSW-Fachbereiche benötigt.",
+  items:[R("🌍 Erdkunde-Perspektive","Pompeji liegt am Golf von Neapel am Fuß des Vesuv. Der fruchtbare Vulkanboden und die Küstenlage machten die Stadt reich – der Vulkanismus war zugleich die Gefahr."),R("⏳ Geschichts-Perspektive","Die Vulkanasche von 79 n. Chr. begrub und konservierte Häuser, Mosaike und Gegenstände. Durch Ausgrabungen werden sie zu Sach- und Bildquellen über das römische Leben."),R("⚖️ Politik- & Wirtschafts-Perspektive","Zusammenleben von Hausherren und Sklaven (M3), Theaterkultur als öffentliches Leben (M2), Stadtordnung, Handel und Arbeit.")],
+  learned:"Ich kann historische Ausgrabungen aus den Blickwinkeln aller drei Fächer analysieren."}
+]},
+
+/* ------------------------------ MODUL 4 ------------------------------ */
+{id:"m4",nr:4,emoji:"⚔️",color:"#9F1239",title:"Auf den Spuren der Römer",sub:"Varusschlacht, Kalkriese und die Suche nach dem Teutoburger Wald",
+tasks:[
+ {sheet:"Arbeitsblatt 1 (Teil 1)",level:"basis",title:"Erste Spurensuche",ref:"zu Text T1 & Karte M1",
+  prompt:"Verbinde die passenden Satzhälften mit einem Strich.",
+  mat:{title:"Text T1: Überreste einer Schlacht",text:"1987 stieß ein Hobby-Archäologe in Kalkriese nördlich von Osnabrück auf über hundert römische Münzen. Sofort begannen Wissenschaftler mit Grabungen: Sie fanden weitere Münzen, militärische Ausrüstungsgegenstände, Knochen und Wallanlagen. Seither steht fest: In Kalkriese fand eine Schlacht zwischen Römern und Germanen statt."},
+  items:[R("1. Ein Hobby-Archäologe fand …","… römische Münzen und Waffen."),R("2. Kalkriese liegt in der Nähe …","… der Stadt Osnabrück."),R("3. Die Funde beweisen …","… eine Schlacht zwischen Römern und Germanen.")],
+  learned:"Ich kann erklären, wo und wie archäologische Funde beweisen, dass es eine Schlacht zwischen Römern und Germanen gab."},
+ {sheet:"Arbeitsblatt 1 (Teil 1)",level:"basis",title:"Meine Frage an Ausgrabungen",ref:"",open:true,
+  prompt:"Notiere eine Frage, die du dir stellst, wenn du an Ausgrabungen denkst.",
+  items:[R("Mögliche Fragen","Wie alt sind die Funde? · Woher wissen Forscher, dass es eine Schlacht war? · Wem gehörten die Münzen? · Was liegt noch im Boden?")],
+  learned:"Ich kann Fragen an Ausgrabungen stellen."},
+ {sheet:"Arbeitsblatt 1 (Teil 2)",level:"basis",title:"Stimmt das? Richtig oder falsch",ref:"nach Text T3",
+  prompt:"Kreuze an, ob die Aussagen nach Text T3 richtig oder falsch sind.",
+  mat:{title:"Text T3: Indizien und offene Fragen",text:"Mittlerweile deuten zahlreiche Indizien (Hinweise) auf Kalkriese als Ort der Varusschlacht hin. Viele der dort gefundenen Münzen haben Stempel des Varus aus dem Jahr 7 nach Christus. Münzforscher sehen das als Bestätigung. Andere Forscher meinen, die Münzen stammten von einem anderen römischen Feldherrn, der später dort war. Wer kämpfte in Kalkriese? Die Forschungen dauern an."},
+  items:[R("Alle Forscher sind sich 100 % einig, was in Kalkriese passierte.","❌ Falsch – andere Forscher glauben, die Münzen stammen von einem späteren Feldherrn. Die Forschung dauert an."),R("Münzen mit dem Stempel des Varus wurden gefunden.","✅ Richtig – viele Münzen tragen den Stempel des Varus aus dem Jahr 7 n. Chr."),R("Die Gesichtsmaske gehörte einem germanischen Bauern.","❌ Falsch – im Text steht nichts davon; die Maske ist römische Ausrüstung aus den Funden von Kalkriese.")],
+  learned:"Ich verstehe, warum Forscher noch offene Fragen haben und nicht alle derselben Meinung sind."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"grund",title:"Lückentext zu Kalkriese",ref:"",
+  prompt:"Setze die passenden Wörter aus dem Wortkasten in die Lücken ein.",
+  gaps:{words:["Römern","Germanen","Ausgrabungen","Kalkriese","Münzen"],lines:["Im Jahr 1987 fand ein Hobby-Archäologe in {Kalkriese} viele alte {Münzen}.","Wissenschaftler begannen sofort mit weiteren {Ausgrabungen}.","Sie fanden Waffen und Wallanlagen. Heute weiß man: Hier gab es einen großen Kampf zwischen {Römern} und {Germanen}."]},
+  learned:"Ich kann die Entdeckung von Kalkriese mit eigenen Worten zusammenfassen."},
+ {sheet:"Arbeitsblatt 2 (Teil A)",level:"regel",title:"Nacherzählen: Wo war der Teutoburger Wald?",ref:"zu Text T2 · Partnerarbeit",
+  prompt:"Beschreibe in eigenen Worten, warum es so schwer war, den wahren „Teutoburger Wald“ zu finden.",
+  mat:{title:"Text T2: Schauplatz der Varusschlacht?",text:"Ob es sich bei den Funden in Kalkriese um Überreste der berühmten Varusschlacht im Jahr 9 handelt? Die römischen Quellen erwähnen ein Waldgebiet („Teutoburger Wald“), vermutlich zwischen den Flüssen Ems und Lippe. Vor 400 Jahren meinte ein Forscher, die Schlacht war bei Detmold und nannte den dortigen Wald kurzerhand um. Doch das wird heute stark angezweifelt."},
+  items:[N("Römische Quellen nennen nur ein Waldgebiet „Teutoburger Wald“, ungefähr zwischen Ems und Lippe – aber keinen genauen Ort."),N("Vor 400 Jahren glaubte ein Forscher, die Schlacht habe bei Detmold stattgefunden, und benannte den dortigen Wald einfach um."),N("Das wird heute stark angezweifelt. Erst die Funde von Kalkriese (1987) liefern handfeste Hinweise.")],
+  learned:"Ich kann Informationen aus Texten zusammenfassen."},
+ {sheet:"Arbeitsblatt 2 (Teil B)",level:"erw",title:"Begründen: Warum ist der Ort so schwer zu finden?",ref:"Aufgabe 5a",
+  prompt:"Warum ist es so schwierig, den exakten Ort einer Schlacht zu ermitteln, die vor über 2000 Jahren stattfand? Denke an Wetter, Natur, Menschen und Veränderungen der Landschaft.",
+  items:[R("Wetter & Natur","Regen, Frost und Erosion tragen Spuren ab; Pflanzen und Erde überdecken sie."),R("Vergänglichkeit","Holz, Stoff und Leder verrotten – nur Metall, Stein und manche Knochen bleiben erhalten."),R("Menschen","Landwirtschaft, Bauen, Raubgräber und Plünderer zerstören oder verschleppen Funde."),R("Landschaft","Wälder, Flüsse und Moore haben sich in 2000 Jahren verändert; die römischen Quellen sind ungenau.")],
+  learned:"Ich kann logisch begründen, warum Geschichte schwer zu erforschen ist."},
+ {sheet:"Arbeitsblatt 2 (Teil B)",level:"erw",title:"Eigene Forscherfragen zu Kalkriese",ref:"Aufgabe 5b",open:true,
+  prompt:"Welche zwei Dinge würdest du in Kalkriese noch gerne herausfinden, wenn du die modernsten Forschungsgeräte hättest?",
+  items:[R("Beispiel 1","Wie viele Soldaten kämpften hier genau? – Mit Metalldetektor, Georadar und Laserscan aus der Luft ließe sich der Boden untersuchen."),R("Beispiel 2","Woher kamen die Kämpfer? – Analysen der Knochen könnten ihre Herkunft verraten.")],
+  learned:"Ich kann eigene Forscherfragen stellen und dabei moderne Methoden der Archäologie nutzen."},
+ {sheet:"Arbeitsblatt 2 (Teil C)",level:"exp",title:"Die Drei-Fächer-Analyse zur Varusschlacht",ref:"Aufgabe 6",
+  prompt:"Analysiere das Thema „Varusschlacht in Kalkriese“ aus allen drei Blickwinkeln.",
+  items:[R("🌍 Erdkunde: Rolle der Natur","Wald, Sumpf und Berge machten die Wege eng. Die römische Armee zog in langer Kolonne und konnte keine Schlachtreihe bilden. Die Germanen kannten das Gelände und legten Hinterhalt und Wall an."),R("⏳ Geschichte: Das Jahr 9 n. Chr.","Drei römische Legionen wurden vernichtet. Rom gab die Eroberung Germaniens bis zur Elbe auf, der Rhein blieb Grenze, Germanien gehörte nicht zum Römischen Reich."),R("⚖️ Politik-Wirtschaft: Der Konflikt","Rom: riesiges Kaiserreich mit Berufsarmee, das Macht, Land und Steuern wollte. Germanen: einzelne Stämme, die ihre Freiheit verteidigten. Unterschiedliche Ordnungen und Interessen führten zum Konflikt.")],
+  learned:"Ich kann ein Thema mehrdimensional aus 3 Fächern beleuchten."}
+]}
+];
+
+/* =====================================================================
+   Aufbereitung
+   ===================================================================== */
+MODULES.forEach(m=>{
+  m.tasks.forEach((t,i)=>{
+    t.id=m.id+"-"+(i+1); t.mod=m;
+    if(t.gaps){
+      let n=0;
+      t.gapLines=t.gaps.lines.map(line=>line.split(/(\{[^}]+\})/).filter(Boolean).map(p=>p[0]==="{"?{gap:n++,w:p.slice(1,-1)}:{txt:p}));
+      t.count=n;
+    }else{ t.count=t.items.length; }
+  });
+});
+
+/* =====================================================================
+   Zustand & Speicher
+   ===================================================================== */
+const KEY="gsw5-lernpass-v1";
+function loadP(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):{};}catch(e){return {};}}
+let progress=loadP();
+function saveP(){try{localStorage.setItem(KEY,JSON.stringify(progress));}catch(e){}}
+const revSet=t=>new Set(progress[t.id]||[]);
+const isDone=t=>revSet(t).size>=t.count;
+const doneCount=m=>m.tasks.filter(isDone).length;
+const getMod=id=>MODULES.find(m=>m.id===id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=s=>document.querySelector(s);
+const app=document.getElementById("app");
+let view={name:"home"};
+let resetArm=false;
+
+/* =====================================================================
+   Startseite
+   ===================================================================== */
+function renderHome(){
+  view={name:"home"};
+  const total=MODULES.reduce((s,m)=>s+m.tasks.length,0);
+  const done=MODULES.reduce((s,m)=>s+doneCount(m),0);
+  app.innerHTML=`
+  <div class="home" style="--mc:#2563EB">
+    <div class="home-top">
+      <div class="badge-gsw" aria-hidden="true"><div><span>GSW</span><small>Klasse 5</small></div></div>
+      <div class="grow">
+        <h1>Lösungen gemeinsam aufdecken</h1>
+        <p>Tippe auf ein Modul. Jede aufgedeckte Lösung zählt – ist eine Aufgabe fertig, zeigt der Lernpass, was die Klasse gelernt hat.</p>
+      </div>
+      <button class="btn" data-act="pass" style="--mc:#2563EB">🎓 Lernpass <span class="lbl">(${done} von ${total})</span></button>
+      ${document.fullscreenEnabled?'<button class="btn ghost" data-act="fs" aria-label="Vollbild">⛶ <span class="lbl">Vollbild</span></button>':''}
+    </div>
+    <div class="cards">
+    ${MODULES.map(m=>{
+      const d=doneCount(m),n=m.tasks.length,pct=Math.round(d/n*100);
+      return `<button class="mcard" data-mod="${m.id}" style="--mc:${m.color};--mct:color-mix(in srgb,${m.color} 62%,var(--ink))">
+        <div><div class="nr">Modul ${m.nr}</div><h2>${esc(m.title)}</h2><p>${esc(m.sub)}</p></div>
+        <div class="ring" style="--p:${pct};--mcs:color-mix(in srgb,${m.color} 11%,var(--card))"><b>${d}/${n}</b></div>
+        <div class="dots">${m.tasks.map(t=>`<i class="dot ${isDone(t)?"on":""}"></i>`).join("")}<span class="go">${d===0?"Starten":d===n?"Ansehen":"Weitermachen"} ▶</span></div>
+      </button>`;}).join("")}
+    </div>
+    <div class="home-foot">
+      <span>Der Lernstand bleibt in diesem Browser gespeichert.</span>
+      <button class="btn ghost" data-act="reset" style="--mc:#2563EB">${resetArm?"Wirklich alles zurücksetzen? Nochmal tippen":"Lernstand zurücksetzen"}</button>
+    </div>
+  </div>`;
+}
+
+/* =====================================================================
+   Modulansicht
+   ===================================================================== */
+function curMod(){return getMod(view.mid);}
+function curTask(){const m=curMod();return m&&view.idx<m.tasks.length?m.tasks[view.idx]:null;}
+
+function openModule(mid,idx){
+  const m=getMod(mid);
+  if(idx===undefined){
+    const first=m.tasks.findIndex(t=>!isDone(t));
+    idx=first<0?m.tasks.length:first;
+  }
+  view={name:"module",mid,idx};
+  app.innerHTML=`
+  <div class="mod" style="--mc:${m.color}">
+    <header class="bar">
+      <button class="btn ghost" data-act="home">🏠 <span class="lbl">Übersicht</span></button>
+      <div class="bar-title"><span class="e">${m.emoji}</span><div style="min-width:0"><small>Modul ${m.nr}</small><b>${esc(m.title)}</b></div></div>
+      <div class="bar-prog"><div class="meter"><i id="meter"></i></div><span id="meterTxt"></span></div>
+      <button class="btn ghost" data-act="pass">🎓 <span class="lbl">Lernpass</span></button>
+      ${document.fullscreenEnabled?'<button class="btn ghost" data-act="fs" aria-label="Vollbild">⛶</button>':''}
+    </header>
+    <div class="body">
+      <nav class="rail" id="rail" aria-label="Aufgaben"></nav>
+      <main class="stage" id="stage"></main>
+    </div>
+    <footer class="foot" id="foot"></footer>
+  </div>`;
+  showStep(idx);
+}
+
+function showStep(idx){
+  const m=curMod();
+  view.idx=Math.max(0,Math.min(idx,m.tasks.length));
+  renderRail(); renderStage(); renderFoot(); renderMeter();
+  const st=$("#stage"); if(st) st.scrollTop=0;
+  const act=document.querySelector(".ri.active");
+  if(act&&act.scrollIntoView) act.scrollIntoView({block:"nearest",inline:"nearest"});
+}
+
+function renderMeter(){
+  const m=curMod(); const d=doneCount(m),n=m.tasks.length;
+  const mt=$("#meter"); if(mt) mt.style.width=(d/n*100)+"%";
+  const tx=$("#meterTxt"); if(tx) tx.textContent=d+" von "+n+" gelernt";
+}
+
+function renderRail(){
+  const m=curMod(); let last="",h="";
+  m.tasks.forEach((t,i)=>{
+    if(t.sheet!==last){h+=`<h4>${esc(t.sheet)}</h4>`;last=t.sheet;}
+    const rv=revSet(t).size;
+    h+=`<button class="ri ${i===view.idx?"active":""} ${isDone(t)?"done":""}" data-go="${i}">
+      <span class="rn">${i+1}</span>
+      <span class="rt"><b>${esc(t.title)}</b><small>${LEVELS[t.level].label} · ${rv}/${t.count}</small></span>
+      <span class="rc">✓</span></button>`;
+  });
+  const allDone=doneCount(m)===m.tasks.length;
+  h+=`<h4>Abschluss</h4><button class="ri ${view.idx===m.tasks.length?"active":""} ${allDone?"done":""}" data-go="${m.tasks.length}">
+      <span class="rn">★</span><span class="rt"><b>Das haben wir gelernt</b><small>Lernpass dieses Moduls</small></span><span class="rc">✓</span></button>`;
+  const rail=$("#rail"); const sc=rail.scrollTop; rail.innerHTML=h; rail.scrollTop=sc;
+}
+
+function renderFoot(){
+  const m=curMod(); const n=m.tasks.length; const f=$("#foot");
+  if(view.idx>=n){
+    const next=MODULES[MODULES.indexOf(m)+1];
+    f.innerHTML=`<button class="btn" data-act="prev">◀ <span class="lbl">Zurück</span></button><span class="spacer"></span>
+      ${next?`<button class="btn primary" data-open="${next.id}:">Weiter zu Modul ${next.nr} ▶</button>`:`<button class="btn primary" data-act="home">Zur Übersicht ▶</button>`}`;
+    return;
+  }
+  f.innerHTML=`<button class="btn" data-act="prev" ${view.idx===0?"disabled":""}>◀ <span class="lbl">Zurück</span></button>
+    <span class="count">Aufgabe ${view.idx+1} von ${n}</span><span class="spacer"></span>
+    <button class="btn" data-act="hideall">Verdecken</button>
+    <button class="btn" data-act="revealall">Alle aufdecken</button>
+    <button class="btn primary" data-act="next">Weiter ▶</button>`;
+}
+
+function taskHTML(t){
+  const lv=LEVELS[t.level];
+  let body="";
+  if(t.gaps){
+    body+=`<div class="wordbank">${t.gaps.words.map(w=>`<span class="chip" data-w="${esc(w)}">${esc(w)}</span>`).join("")}</div>
+    <div class="gaptext">${t.gapLines.map(line=>`<p>${line.map(p=>p.gap!==undefined?`<button class="gap" data-i="${p.gap}" aria-label="Lücke aufdecken"><span class="ink">${esc(p.w)}</span></button>`:esc(p.txt)).join("")}</p>`).join("")}</div>`;
+  }else{
+    body+=`<div class="rows">${t.items.map((it,i)=>`
+      <button class="row ${it.q?"":"solo"}" data-i="${i}">
+        ${it.q?`<span class="q">${esc(it.q)}</span>`:`<span class="mark"></span>`}
+        <span class="a"><span class="tap">Tippen zum Aufdecken</span><span class="ink ${it.a.length<46&&it.a.indexOf("\n")<0?"hand":""}">${esc(it.a)}</span></span>
+      </button>`).join("")}</div>`;
+  }
+  return `<div class="stage-in">
+    <div class="meta"><span class="lvl ${lv.cls}">${lv.label}</span><span>${esc(t.sheet)}${t.ref?" · "+esc(t.ref):""}</span></div>
+    <h2>${esc(t.title)}</h2>
+    <p class="prompt">${esc(t.prompt)}</p>
+    ${t.mat?`<details><summary>📄 ${esc(t.mat.title)}</summary><div class="dbody">${esc(t.mat.text)}</div></details>`:""}
+    ${t.hint?`<details class="hint"><summary>💡 Hinweis für die Lehrkraft</summary><div class="dbody">${esc(t.hint)}</div></details>`:""}
+    ${t.open?`<div class="note-open">Offene Aufgabe – die Antworten der Klasse sind individuell. Das sind mögliche Beispiele:</div>`:""}
+    ${body}
+    <section class="learned off" id="learned"></section>
+  </div>`;
+}
+
+function summaryHTML(m,withHead){
+  const d=doneCount(m),n=m.tasks.length,all=d===n;
+  return `${withHead?`<div class="sum-head">
+      <div class="stamp ${all?"":"ghost"}">${all?'<div><i>★</i>Modul<br>geschafft</div>':"★"}</div>
+      <div><h2>Das haben wir in Modul ${m.nr} gelernt</h2><p>${d} von ${n} Aufgaben besprochen${all?" – alle Lernziele erreicht!":""}</p></div></div>`:""}
+    <ul class="learn-list">${m.tasks.map((t,i)=>`<li><button class="li ${isDone(t)?"on":"off"}" data-open="${m.id}:${i}">
+      <span class="c">✓</span>
+      <span><b>${esc(t.learned)}</b><small>Aufgabe ${i+1}: ${esc(t.title)}</small></span>
+      <span class="lvl ${LEVELS[t.level].cls}">${LEVELS[t.level].label}</span></button></li>`).join("")}</ul>`;
+}
+
+function renderStage(){
+  const m=curMod(); const st=$("#stage");
+  if(view.idx>=m.tasks.length){
+    st.innerHTML=`<div class="stage-in">${summaryHTML(m,true)}</div>`;
+    return;
+  }
+  const t=curTask();
+  st.innerHTML=taskHTML(t);
+  syncStage(false);
+}
+
+function syncStage(pop){
+  const t=curTask(); if(!t) return;
+  const rev=revSet(t); const st=$("#stage");
+  st.querySelectorAll("[data-i]").forEach(el=>el.classList.toggle("open",rev.has(+el.dataset.i)));
+  if(t.gaps){
+    const opened=new Set();
+    t.gapLines.forEach(l=>l.forEach(p=>{if(p.gap!==undefined&&rev.has(p.gap))opened.add(p.w);}));
+    st.querySelectorAll(".chip").forEach(c=>c.classList.toggle("used",opened.has(c.dataset.w)));
+  }
+  const el=$("#learned"); if(!el) return;
+  const d=isDone(t), left=t.count-rev.size;
+  el.className="learned "+(d?"on":"off")+(pop?" pop":"");
+  el.innerHTML=d
+    ?`<div class="stamp"><div><i>✓</i>Gelernt</div></div><div><h3>Das haben wir gelernt</h3><p>${esc(t.learned)}</p></div>`
+    :`<div class="stamp ghost">?</div><div><h3>Das lernen wir hier</h3><p>Noch ${left} ${left===1?"Lösung":"Lösungen"} aufdecken – dann erscheint, was die Klasse gelernt hat.</p></div>`;
+}
+
+function afterChange(wasDone){
+  const t=curTask();
+  syncStage(!wasDone&&isDone(t));
+  renderRail(); renderMeter();
+}
+
+function revealOne(el){
+  const t=curTask(); if(!t) return;
+  const was=isDone(t); const s=revSet(t); s.add(+el.dataset.i);
+  progress[t.id]=[...s]; saveP(); afterChange(was);
+}
+function revealAll(){
+  const t=curTask(); if(!t) return;
+  const was=isDone(t); progress[t.id]=Array.from({length:t.count},(_,i)=>i); saveP(); afterChange(was);
+}
+function hideAll(){
+  const t=curTask(); if(!t) return;
+  const was=isDone(t); delete progress[t.id]; saveP(); afterChange(was);
+}
+
+/* =====================================================================
+   Lernpass (alle Module)
+   ===================================================================== */
+function renderPass(){
+  view={name:"pass"};
+  const total=MODULES.reduce((s,m)=>s+m.tasks.length,0);
+  const done=MODULES.reduce((s,m)=>s+doneCount(m),0);
+  app.innerHTML=`<div class="pass">
+    <header class="pass-bar"><button class="btn ghost" data-act="home" style="--mc:#2563EB">🏠 <span class="lbl">Übersicht</span></button>
+      <h1>🎓 Lernpass GSW Klasse 5 · ${done} von ${total} Lernzielen erreicht</h1></header>
+    <div class="pass-body">${MODULES.map(m=>`<section class="pass-mod" style="--mc:${m.color}">
+      <h3><span>${m.emoji}</span> Modul ${m.nr}: ${esc(m.title)} <span class="cnt">${doneCount(m)} von ${m.tasks.length}</span></h3>
+      ${summaryHTML(m,false)}</section>`).join("")}</div></div>`;
+}
+
+/* =====================================================================
+   Aktionen & Eingaben
+   ===================================================================== */
+function toggleFS(){
+  try{
+    if(!document.fullscreenElement){const p=document.documentElement.requestFullscreen();if(p&&p.catch)p.catch(()=>{});}
+    else{const p=document.exitFullscreen();if(p&&p.catch)p.catch(()=>{});}
+  }catch(e){}
+}
+function go(delta){
+  if(view.name!=="module") return;
+  const m=curMod(); const n=m.tasks.length;
+  const next=view.idx+delta;
+  if(next<0) return;
+  if(next>n){ return; }
+  showStep(next);
+}
+
+app.addEventListener("click",e=>{
+  const act=e.target.closest("[data-act]");
+  if(act){
+    const a=act.dataset.act;
+    if(a==="home") renderHome();
+    else if(a==="pass") renderPass();
+    else if(a==="fs") toggleFS();
+    else if(a==="prev") go(-1);
+    else if(a==="next") go(1);
+    else if(a==="revealall") revealAll();
+    else if(a==="hideall") hideAll();
+    else if(a==="reset"){
+      if(!resetArm){resetArm=true;renderHome();setTimeout(()=>{if(resetArm){resetArm=false;if(view.name==="home")renderHome();}},4000);}
+      else{progress={};saveP();resetArm=false;renderHome();}
+    }
+    return;
+  }
+  const mod=e.target.closest("[data-mod]");
+  if(mod){openModule(mod.dataset.mod);return;}
+  const op=e.target.closest("[data-open]");
+  if(op){const [mid,i]=op.dataset.open.split(":");openModule(mid,i===""?undefined:+i);return;}
+  const g=e.target.closest("[data-go]");
+  if(g){showStep(+g.dataset.go);return;}
+  const it=e.target.closest("[data-i]");
+  if(it&&view.name==="module") revealOne(it);
+});
+
+/* Wischen auf dem Touchscreen: links = weiter, rechts = zurück */
+let tx=0,ty=0,tOn=false;
+app.addEventListener("touchstart",e=>{
+  tOn=!!e.target.closest("#stage")&&e.touches.length===1;
+  if(tOn){tx=e.touches[0].clientX;ty=e.touches[0].clientY;}
+},{passive:true});
+app.addEventListener("touchend",e=>{
+  if(!tOn||view.name!=="module") return; tOn=false;
+  const t=e.changedTouches[0]; const dx=t.clientX-tx, dy=t.clientY-ty;
+  if(Math.abs(dx)>90&&Math.abs(dx)>2*Math.abs(dy)) go(dx<0?1:-1);
+},{passive:true});
+
+document.addEventListener("keydown",e=>{
+  if(view.name!=="module") return;
+  if(e.key==="ArrowRight") go(1);
+  else if(e.key==="ArrowLeft") go(-1);
+});
+
+renderHome();
+</script>
+</body>
+</html>
